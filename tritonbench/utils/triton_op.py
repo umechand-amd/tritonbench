@@ -26,8 +26,8 @@ import psutil
 import tabulate
 import torch
 import triton
-from triton.runtime.errors import OutOfResources as TritonOutOfResources
 from torch.utils._pytree import tree_map
+from triton.runtime.errors import OutOfResources as TritonOutOfResources
 from tritonbench.components.do_bench import do_bench_wrapper, Latency
 from tritonbench.components.export import export_data
 from tritonbench.components.power import PowerManagerTask
