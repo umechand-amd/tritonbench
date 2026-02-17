@@ -192,7 +192,6 @@ def _reduce(
     BLOCK_SIZE_N: tl.constexpr,
 ):
     pid = tl.program_id(0)
-    num_pid_m = tl.cdiv(M, BLOCK_SIZE_M)
     num_pid_n = tl.cdiv(N, BLOCK_SIZE_N)
     pid_m = pid // num_pid_n
     pid_n = pid % num_pid_n
