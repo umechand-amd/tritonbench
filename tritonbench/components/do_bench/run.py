@@ -9,6 +9,8 @@ import triton
 from torch._inductor.runtime.benchmarking import benchmarker
 from tritonbench.components.do_bench.entropy.entropy_criterion import EntropyCriterion
 from tritonbench.utils.constants import DEFAULT_N_REP, DEFAULT_N_WARMUP
+
+MAX_CUDAGRAPH_REPEAT = 1000
 from tritonbench.utils.cudagraph_utils import CudaGraphConfig
 
 from .common import summarize_statistics
@@ -220,7 +222,7 @@ def _do_bench_cudagraph_with_cache_clear(
         torch.cuda.synchronize()
         estimate_ms = start_event.elapsed_time(end_event) / 5
 
-        n_repeat = 1000 if estimate_ms == 0 else max(1, int(rep / estimate_ms))
+        n_repeat = MAX_CUDAGRAPH_REPEAT if estimate_ms == 0 else min(MAX_CUDAGRAPH_REPEAT, max(1, int(rep / estimate_ms)))
 
         g = torch.cuda.CUDAGraph()
         with torch.cuda.graph(g):
