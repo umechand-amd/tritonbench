@@ -222,7 +222,11 @@ def _do_bench_cudagraph_with_cache_clear(
         torch.cuda.synchronize()
         estimate_ms = start_event.elapsed_time(end_event) / 5
 
-        n_repeat = MAX_CUDAGRAPH_REPEAT if estimate_ms == 0 else min(MAX_CUDAGRAPH_REPEAT, max(1, int(rep / estimate_ms)))
+        n_repeat = (
+            MAX_CUDAGRAPH_REPEAT
+            if estimate_ms == 0
+            else min(MAX_CUDAGRAPH_REPEAT, max(1, int(rep / estimate_ms)))
+        )
 
         g = torch.cuda.CUDAGraph()
         with torch.cuda.graph(g):
