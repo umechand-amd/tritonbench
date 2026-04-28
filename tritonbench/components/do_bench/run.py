@@ -660,7 +660,7 @@ def do_bench_wrapper(
         entropy_window_size: Size of rolling window for entropy tracking
         entropy_max_samples: Maximum samples before stopping warmup (safety limit)
     """
-    if (warmup is None or rep is None) and not repcnt:
+    if (warmup is None or rep is None) and not repcnt and not use_cuda_graphs:
         estimate_runtime = estimate_cuda_runtime_ms(fn, grad_to_none=grad_to_none)
         warmup, rep = resolve_warmup_and_rep(
             warmup,
